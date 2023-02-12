@@ -1,0 +1,12 @@
+// formatDate := "20 January 2002"
+sFormatDate, _ := time.Parse(time.RFC822, startDate)
+// sDay := strconv.Itoa(sFormatDate.Day())
+// sMonth := sFormatDate.Month().String()
+// sYear := strconv.Itoa(sFormatDate.Year())
+// sDate := sDay + " " + sMonth + " " + sYear
+
+eFormatDate, _ := time.Parse(time.RFC822, endDate)
+// eDay := strconv.Itoa(eFormatDate.Day())
+// eMonth := eFormatDate.Month().String()
+// eYear := strconv.Itoa(eFormatDate.Year())
+// eDate := eDay + " " + eMonth + " " + eYear
