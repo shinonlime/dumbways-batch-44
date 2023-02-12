@@ -1,0 +1,283 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"html/template"
+	"log"
+	"net/http"
+	"personal-web/connection"
+	"strconv"
+	"time"
+
+	"github.com/gorilla/mux"
+)
+
+var Data = map[string]interface{}{
+	"Title": "Personal Web |",
+}
+
+type Project struct {
+	Id          int
+	Title       string
+	StartDate   time.Time
+	EndDate     time.Time
+	Description string
+	NodeJS      bool
+	ReactJS     bool
+	NextJS      bool
+	Typescript  bool
+	Image       string
+	Author      string
+}
+
+var Projects = []Project{}
+
+func main() {
+	router := mux.NewRouter()
+
+	connection.DbConnect()
+
+	router.PathPrefix("/public").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))))
+
+	router.HandleFunc("/", home).Methods("GET")
+	router.HandleFunc("/contact-me", contactMe).Methods("GET")
+	router.HandleFunc("/add-project", addProject).Methods("GET")
+	router.HandleFunc("/add-data-project", addDataProject).Methods("POST")
+	router.HandleFunc("/detail-project/{id}", detProject).Methods("GET")
+	router.HandleFunc("/edit-project/{id}", editProject).Methods("GET")
+	router.HandleFunc("/delete-project/{id}", delProject).Methods("GET")
+
+	fmt.Println("Server running on port 5000")
+	http.ListenAndServe("localhost:5000", router)
+}
+
+func home(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-type", "text/html; charset=utf-8")
+
+	var tmpl, err = template.ParseFiles("views/index.html")
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("message : " + err.Error()))
+		return
+	}
+
+	rows, _ := connection.Conn.Query(context.Background(), "SELECT id, title, start_date, end_date, description, is_node, is_react, is_next,is_typescript, image, author_id FROM public.tb_project")
+
+	var result []Project
+
+	for rows.Next() {
+		var each = Project{}
+
+		var err = rows.Scan(&each.Id, &each.Title, &each.StartDate, &each.EndDate, &each.Description, &each.NodeJS, &each.ReactJS, &each.NextJS, &each.Typescript, &each.Image, &each.Author)
+
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+
+		result = append(result, each)
+	}
+
+	resp := map[string]interface{}{
+		"Data":    Data,
+		"Project": result,
+	}
+
+	w.WriteHeader(http.StatusOK)
+	tmpl.Execute(w, resp)
+}
+
+func contactMe(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-type", "text/html; charset=utf-8")
+
+	var tmpl, err = template.ParseFiles("views/contact-me.html")
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("message : " + err.Error()))
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	tmpl.Execute(w, Data)
+}
+
+func addProject(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-type", "text/html; charset=utf-8")
+
+	var tmpl, err = template.ParseFiles("views/add-project.html")
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("message : " + err.Error()))
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	tmpl.Execute(w, Data)
+}
+
+func detProject(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-type", "text/html; charset=utf-8")
+
+	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+
+	var tmpl, err = template.ParseFiles("views/detail-project.html")
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("message : " + err.Error()))
+		return
+	}
+
+	DetailProject := Project{}
+
+	err = connection.Conn.QueryRow(context.Background(), "select * from tb_project where id=$1", id).Scan(&DetailProject.Id, &DetailProject.Title, &DetailProject.StartDate, &DetailProject.EndDate, &DetailProject.Description, &DetailProject.NodeJS, &DetailProject.ReactJS, &DetailProject.NextJS, &DetailProject.Typescript, &DetailProject.Image, &DetailProject.Author)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Message : " + err.Error()))
+		return
+	}
+
+	// DetailProject.sFormatDate = DetailProject.StartDate.Format("19 August 2000")
+	// DetailProject.eFormatDate = DetailProject.EndDate.Format("19 August 2000")
+
+	// for i, data := range Projects {
+	// 	if i == id {
+	// 		DetailProject = Project{
+	// 			Title:       data.Title,
+	// 			StartDate:   data.StartDate,
+	// 			EndDate:     data.EndDate,
+	// 			FirstDate:   data.FirstDate,
+	// 			SecondDate:  data.SecondDate,
+	// 			Description: data.Description,
+	// 			NodeJS:      data.NodeJS,
+	// 			ReactJS:     data.ReactJS,
+	// 			NextJS:      data.NextJS,
+	// 			Typescript:  data.Typescript,
+	// 		}
+	// 	}
+	// }
+
+	resp := map[string]interface{}{
+		"Data":    Data,
+		"Project": DetailProject,
+	}
+
+	w.WriteHeader(http.StatusOK)
+	tmpl.Execute(w, resp)
+}
+
+func editProject(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-type", "text/html; charset=utf-8")
+
+	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+
+	var tmpl, err = template.ParseFiles("views/edit-project.html")
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("message : " + err.Error()))
+		return
+	}
+
+	EditProject := Project{}
+
+	for i, data := range Projects {
+		if i == id {
+			EditProject = Project{
+				Title:       data.Title,
+				StartDate:   data.StartDate,
+				EndDate:     data.EndDate,
+				Description: data.Description,
+				NodeJS:      data.NodeJS,
+				ReactJS:     data.ReactJS,
+				NextJS:      data.NextJS,
+				Typescript:  data.Typescript,
+			}
+		}
+	}
+
+	resp := map[string]interface{}{
+		"Data":    Data,
+		"Project": EditProject,
+	}
+
+	w.WriteHeader(http.StatusOK)
+	tmpl.Execute(w, resp)
+}
+
+func addDataProject(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Fatal()
+	}
+
+	title := r.PostForm.Get("title")
+	startDate := r.PostForm.Get("start-date")
+	endDate := r.PostForm.Get("end-date")
+	description := r.PostForm.Get("description")
+	technologies := []string{r.Form.Get("node-js"), r.Form.Get("react-js"), r.Form.Get("next-js"), r.Form.Get("typescript")}
+
+	iNode := false
+	iReact := false
+	iNext := false
+	iTypescript := false
+
+	if technologies[0] != "" {
+		iNode = true
+	}
+	if technologies[1] != "" {
+		iReact = true
+	}
+	if technologies[2] != "" {
+		iNext = true
+	}
+	if technologies[3] != "" {
+		iTypescript = true
+	}
+
+	_, err = connection.Conn.Exec(context.Background(), "insert into tb_project(title, start_date, end_date, description, is_node, is_react, is_next, is_typescript, image, author_id) values ($1, $2, $3, $4, $5, $6, $7, $8, 'image.png', '1')", title, startDate, endDate, description, iNode, iReact, iNext, iTypescript)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Message : " + err.Error()))
+		return
+	}
+
+	// sFormatDate, _ := time.Parse(time.RFC822, startDate)
+	// eFormatDate, _ := time.Parse(time.RFC822, endDate)
+
+	// // sDate := sFormatDate.Format("20 January 2002")
+	// // eDate := eFormatDate.Format("20 January 2002")
+
+	// var newProject = Project{
+	// 	Title:       title,
+	// 	StartDate:   sFormatDate,
+	// 	EndDate:     eFormatDate,
+	// 	FirstDate:   startDate,
+	// 	SecondDate:  endDate,
+	// 	Description: description,
+	// 	NodeJS:      iNode,
+	// 	ReactJS:     iReact,
+	// 	NextJS:      iNext,
+	// 	Typescript:  iTypescript,
+	// }
+
+	// Projects = append(Projects, newProject)
+
+	// fmt.Println(newProject)
+
+	http.Redirect(w, r, "/", http.StatusMovedPermanently)
+}
+
+func delProject(w http.ResponseWriter, r *http.Request) {
+	// w.Header().Set("Chace-control", "no-cache, no-store, must-revalidate")
+
+	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+
+	Projects = append(Projects[:id], Projects[id+1:]...)
+
+	http.Redirect(w, r, "/", http.StatusMovedPermanently)
+}
