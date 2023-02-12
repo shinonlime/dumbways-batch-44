@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/3ba0bd92cf.js" crossorigin="anonymous"></script>
+    <title>Day 2 | Dumbways Batch 44</title>
+</head>
+<body>
+    <nav>
+        <div class="left-side">
+            <div>
+                <a href="index.html"><img src="assets/images/brandwhite.png" alt="" width="60px"></a>
+            </div>
+            <div>
+                <ul style="list-style-type: none; display: flex; column-gap: 20px;">
+                    <li><a href="index.html" class="btn-navbar">Home</a></li>
+                    <li>My Projects</li>
+                </ul>
+            </div>
+        </div>
+        <div class="right-side">
+            <a href="contact-me.html" class="btn-primary-dark" style="font-size: large;">Contact me</a>
+        </div>
+    </nav>
+    <div class="form-contact">
+        <h2 class="title" style="margin: 0px auto 20px auto;">Get in Touch!</h2>
+        <form action="">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" placeholder="Jhon Doe">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="jhondoe@email.com">
+            <label for="phone">Phone number</label>
+            <input type="number" name="phone" id="phone" placeholder="08xxxxxxxxxx">
+            <label for="subject">Subject</label>
+            <select name="subject" id="subject">
+                <option value="" disabled selected>Select your option</option>
+                <option value="Front-end">Front-end</option>
+                <option value="Back-end">Back-end</option>
+                <option value="Fullstack">Fullstack</option>
+            </select>
+            <label for="message">Your message</label>
+            <textarea name="message" id="message" cols="30" rows="4" placeholder="Typing here..."></textarea>
+            <button onclick="getData()" type="submit" class="btn-primary" style="margin-left: auto; margin-right: 0; margin-top: 10px">Submit</button>
+        </form>
+    </div>
+    <script src="assets/js/contact-me.js"></script>
+</body>
+</html>
