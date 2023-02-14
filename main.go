@@ -67,7 +67,7 @@ func main() {
 	router.HandleFunc("/add-project", addProject).Methods("GET")
 	router.HandleFunc("/add-data-project", middleware.UploadFile(addDataProject)).Methods("POST")
 	router.HandleFunc("/edit-project/{id}", editProject).Methods("GET")
-	router.HandleFunc("/update-data-project/{id}", updateProject).Methods("POST")
+	router.HandleFunc("/update-data-project/{id}", middleware.UploadFile(updateProject)).Methods("POST")
 	router.HandleFunc("/delete-project/{id}", deleteProject).Methods("GET")
 	router.HandleFunc("/detail-project/{id}", detailProject).Methods("GET")
 	router.HandleFunc("/contact-me", contactMe).Methods("GET")
@@ -508,8 +508,10 @@ func updateProject(w http.ResponseWriter, r *http.Request) {
 	endDate := r.PostForm.Get("end-date")
 	description := r.PostForm.Get("description")
 	technologies := r.Form["tech"]
+	imageContext := r.Context().Value("dataFile")
+	image := imageContext.(string)
 
-	_, err = connection.Conn.Exec(context.Background(), "update tb_project set title=$1, description=$2, start_date=$3, end_date=$4, technologies=$5 where id=$6", title, description, startDate, endDate, technologies, id)
+	_, err = connection.Conn.Exec(context.Background(), "update public.tb_project set title=$1, description=$2, image=$3, start_date=$4, end_date=$5, technologies=$6 where id=$7", title, description, image, startDate, endDate, technologies, id)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

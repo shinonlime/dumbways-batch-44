@@ -60,7 +60,7 @@
         <div class="row justify-content-center py-5">
             <div class="col-6 col-md-5 col-lg-4">
                 <h5 class="text-center mb-4 fw-bold fs-2">Edit Project</h5>
-                <form action="/update-data-project/{{.Project.Id}}" method="post">
+                <form action="/update-data-project/{{.Project.Id}}" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="title" class="form-label">Title Project</label>
                         <input type="text" class="form-control shadow-lg" id="title" name="title" value="{{.Project.Title}}" />
@@ -101,17 +101,17 @@
                         <div class="ps-4">
                             <div class="form-check">
                                 {{if .NextJS}}
-                                <input class="form-check-input" name="next-js" type="checkbox" value="Next JS" id="next-js" checked />
+                                <input class="form-check-input" name="tech" type="checkbox" value="Next JS" id="next-js" checked />
                                 {{else}}
-                                <input class="form-check-input" name="next-js" type="checkbox" value="Next JS" id="next-js" />
+                                <input class="form-check-input" name="tech" type="checkbox" value="Next JS" id="next-js" />
                                 {{end}}
                                 <label class="form-check-label" for="next-js">Next JS</label>
                             </div>
                             <div class="form-check">
                                 {{if .Typescript}}
-                                <input class="form-check-input" name="typescript" type="checkbox" value="Typescript" id="typescript" checked />
+                                <input class="form-check-input" name="tech" type="checkbox" value="Typescript" id="typescript" checked />
                                 {{else}}
-                                <input class="form-check-input" name="typescript" type="checkbox" value="Typescript" id="typescript" />
+                                <input class="form-check-input" name="tech" type="checkbox" value="Typescript" id="typescript" />
                                 {{end}}
                                 <label class="form-check-label" for="typescript">Typescript</label>
                             </div>
@@ -123,6 +123,7 @@
                             <input type="file" class="form-control shadow-lg" id="upload-image" name="upload-image" />
                             <label class="input-group-text shadow-lg"><i class="fa-solid fa-paperclip" width="25px"></i></label>
                         </div>
+                        <input type="hidden" value="{{.Project.Image}}" name="oldpict" />
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-dark">Submit</button>
