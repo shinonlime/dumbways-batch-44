@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+            crossorigin="anonymous" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://kit.fontawesome.com/3ba0bd92cf.js" crossorigin="anonymous"></script>
+        <title>{{.Title}} Home</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container">
+                <a class="navbar-brand pe-3" href="/"><img src="public/assets/images/brandred.png" alt="" width="60px" /></a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold fs-5" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-5" href="/add-project">Add Project</a>
+                        </li>
+                    </ul>
+                    <a class="btn btn-dark" href="/contact-me">Contact Me</a>
+                </div>
+            </div>
+        </nav>
+        <div class="bg-dark-subtle p-5">
+            <div class="mx-auto container bg-white rounded-4 p-4 p-lg-5">
+                <div class="grid d-lg-flex align-items-center">
+                    <div class="pb-4 pb-lg-0 pe-0 pe-lg-5">
+                        <h2 class="card-title fw-bold">Hi! Welcome to my hut!</h2>
+                        <p class="card-text pt-2" style="text-align: justify">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia quidem qui eum voluptatem obcaecati aliquid at libero animi, quaerat iure autem consectetur nemo sit
+                            debitis eligendi inventore dolorum laudantium dolore ullam voluptatibus illo, placeat ratione quam! Nobis sint iste nemo distinctio id quod aut voluptatibus animi, quisquam
+                            ipsa labore voluptatum ipsum eius atque veritatis dignissimos modi quis nisi sequi tempora architecto quia. Error, architecto cum. Voluptatibus qui aspernatur ut illum, ad,
+                            consectetur mollitia, nisi tempora aperiam magni eum tempore iste vel porro? Mollitia sit odio enim quo eligendi libero cumque odit voluptates eaque, totam veritatis
+                            cupiditate voluptatum vitae deserunt voluptate.
+                        </p>
+                        <div class="mt-4">
+                            <a href="#" class="btn btn-dark rounded-pill me-2 px-4">contact</a>
+                            <a href="#" class="card-link text-decoration-none text-dark">download CV<i class="ms-2 fa-solid fa-download fa-lg"></i></a>
+                        </div>
+                        <div class="d-flex column-gap-3 mt-4">
+                            <a target="_blank" href="https://web.facebook.com/shinonlime/"><i class="fa-brands fa-square-facebook fa-2x text-black text-decoration-none"></i></a>
+                            <a target="_blank" href="https://www.instagram.com/saptrdan/"><i class="fa-brands fa-square-instagram fa-2x text-black text-decoration-none"></i></a>
+                            <a target="_blank" href="https://twitter.com/shinonlime"><i class="fa-brands fa-square-twitter fa-2x text-black text-decoration-none"></i></a>
+                            <a target="_blank" href="https://www.linkedin.com/in/daniel-saputro/"><i class="fa-brands fa-linkedin fa-2x text-black text-decoration-none"></i></a>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center ps-0 ps-lg-5">
+                        <div class="card shadow-lg rounded-4" style="width: 18rem">
+                            <img src="public/assets/images/271861445_3231104880454770_3386344816575376367_n.jpg" class="card-img-top" alt="..." />
+                            <div class="card-body text-center">
+                                <h5 class="card-title fw-bold fs-4">Daniel Saputro</h5>
+                                <p class="card-text">Frontend developer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-5 container">
+            <h5 class="text-center mb-4 fw-bold fs-2">My Project</h5>
+            <div class="d-flex justify-content-center">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <div class="col">
+                        <a href="/detail-project/1" class="text-decoration-none text-black">
+                            <div class="card p-3 pb-0 shadow-lg">
+                                <img src="public/assets/images/EKhLc4hU0AAd6ld.jpg" class="card-img-top rounded-3" alt="..." />
+                                <div class="card-body px-0">
+                                    <h5 class="card-title">Dumbways Mobile App - 2023</h5>
+                                    <h6 class="card-subtitle pb-1 text-body-secondary fw-normal">Durasi: 2 bulan</h6>
+                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex column-gap-3 my-4">
+                                        <img src="public/assets/icons/node-js.svg" alt="" width="25px" />
+                                        <img src="public/assets/icons/next-js.svg" alt="" width="25px" />
+                                        <img src="public/assets/icons/react.svg" alt="" width="25px" />
+                                        <img src="public/assets/icons/typescript.svg" alt="" width="25px" />
+                                    </div>
+                                    <div class="d-flex column-gap-3">
+                                        <button class="btn btn-dark btn-sm rounded fw-bold w-100">edit</button>
+                                        <button class="btn btn-danger btn-sm rounded fw-bold w-100">delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/3ba0bd92cf.js" crossorigin="anonymous"></script>
+        <title>Day 4 | Dumbways</title>
+    </head>
+    <body>
+        <nav>
+            <div class="left-side">
+                <div>
+                    <a href="index.html"><img src="assets/images/brandwhite.png" alt="" width="60px" /></a>
+                </div>
+                <div>
+                    <ul style="list-style-type: none; display: flex; column-gap: 20px">
+                        <li><a href="index.html" class="btn-navbar">Home</a></li>
+                        <li><a href="add-my-project.html" class="btn-navbar" style="border-bottom: 2px solid white">My Projects</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right-side">
+                <a href="contact-me.html" class="btn-primary" style="font-size: large">Contact me</a>
+            </div>
+        </nav>
+        <div class="form">
+            <h2 class="title" style="margin: 0px auto 20px auto">Add project</h2>
+            <form onsubmit="getData(event)">
+                <label for="name">Project name</label>
+                <input type="text" name="project_name" id="project_name" />
+                <div style="display: flex; column-gap: 10px">
+                    <div style="display: grid; width: 100%">
+                        <label for="start_date">Start date</label>
+                        <input type="date" name="start_date" id="start_date" />
+                    </div>
+                    <div style="display: grid; width: 100%">
+                        <label for="end_date">End date</label>
+                        <input type="date" name="end_date" id="end_date" />
+                    </div>
+                </div>
+                <label for="description">Description</label>
+                <textarea name="description" id="description" cols="30" rows="10" placeholder="Typing here..."></textarea>
+                <label for="technologies">Technologies</label>
+                <div>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="padding: 0px 0px 10px 0px">
+                                <label class="checkbox" style="margin: 0px 0px 0px 10px; font-size: medium; font-weight: normal">
+                                    Node JS
+                                    <input type="checkbox" name="technologies" value='<img src="assets/icons/node-js.svg" width="24px" height="24px">' id="nodejs" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                            <td style="padding: 0px 0px 10px 0px">
+                                <label class="checkbox" style="margin: 0px 0px 0px 10px; font-size: medium; font-weight: normal">
+                                    React JS
+                                    <input type="checkbox" name="technologies" value='<img src="assets/icons/react.svg" width="24px" height="24px">' id="reactjs" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0px 0px 10px 0px">
+                                <label class="checkbox" style="margin: 0px 0px 0px 10px; font-size: medium; font-weight: normal">
+                                    Next JS
+                                    <input type="checkbox" name="technologies" value='<img src="assets/icons/next-js.svg" width="24px" height="24px">' id="nextjs" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                            <td style="padding: 0px 0px 10px 0px">
+                                <label class="checkbox" style="margin: 0px 0px 0px 10px; font-size: medium; font-weight: normal">
+                                    Typescript
+                                    <input type="checkbox" name="technologies" value='<img src="assets/icons/typescript.svg" width="24px" height="24px">' id="typescript" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <label>Upload image</label>
+                <div class="input-file-group">
+                    <div style="display: flex; column-gap: 5px; justify-content: start; align-items: center">
+                        <label for="image_uploads" style="font-size: medium; font-weight: normal; margin: 0px; cursor: pointer" class="btn-primary">Choose</label>
+                        <input type="file" id="image_uploads" accept=".jpg, .jpeg, .png" class="image_uploads" />
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-paperclip" style="color: #21295c"></i>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" style="margin-left: auto; margin-right: 0; margin-top: 10px">Submit</button>
+            </form>
+        </div>
+        <div class="list-project">
+            <h2 class="title" style="margin: 0px auto 20px auto; text-align: center">My projects</h2>
+            <div id="content-project" class="content-project" style="display: flex; flex-wrap: wrap; justify-content: center; column-gap: 30px"></div>
+        </div>
+        <script src="assets/js/project.js"></script>
+    </body>
+</html>
